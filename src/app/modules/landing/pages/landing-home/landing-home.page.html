@@ -1,0 +1,146 @@
+<header class="navbar">
+  <div class="navbar__container">
+    <img src="assets/brand/logovet.png" alt="VetIDAT Logo" class="navbar__logo" routerLink="/" height="1300"
+         width="1300">
+    <nav class="navbar__links">
+      <a href="#" class="navbar__link">Nosotros</a>
+      <a href="#" class="navbar__link">Servicios</a>
+      <a href="#" class="navbar__link">Clínica Veterinaria</a>
+      <a href="#" class="navbar__link">Blog</a>
+    </nav>
+  </div>
+</header>
+
+<main class="landing">
+  <section class="hero">
+    <div class="hero__container">
+      <div class="hero__content">
+        <h1 class="hero__title">Atención Veterinaria<br>24 horas</h1>
+        <p class="hero__subtitle">Saludable desde la nariz hasta la cola</p>
+        <p class="hero__text">Cuidado especializado y la más alta tecnología para tu mascota en un solo lugar.</p>
+        <button class="hero__btn" (click)="toggleModal(true)">
+          <span class="hero__btn-icon">📅</span> Agenda una consulta
+        </button>
+
+        <app-modal-agenda
+          [isOpen]="isAgendaModal"
+          (closeModal)="toggleModal(false)">
+        </app-modal-agenda>
+
+      </div>
+      <div class="hero__image-wrapper">
+        <img src="assets/images/mujerportada.png" alt="Atención Veterinaria" class="hero__img">
+      </div>
+    </div>
+    <div class="hero__curve"></div>
+  </section>
+
+  <section class="services">
+    <h2 class="services__title">¿Qué podemos hacer por tu mascota hoy?</h2>
+
+    <div class="services__grid">
+      <div class="service-card">
+        <div class="service-card__icon-wrapper">
+          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4.5 16.5c-1.5-2.5-1.5-5.5 0-8s4.5-2.5 6 0l1.5 1.5 1.5-1.5c1.5-2.5 4.5-2.5 6 0s1.5 5.5 0 8L12 21l-7.5-4.5z"/>
+            <path d="M12 5v4M10 7h4"/>
+          </svg>
+        </div>
+        <span class="service-card__text">Consulta veterinaria</span>
+        <span class="service-card__arrow">→</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-card__icon-wrapper">
+          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 12a8 8 0 0 1 16 0v4H4v-4zM2 16h20M6 20h2M16 20h2"/>
+          </svg>
+        </div>
+        <span class="service-card__text">Baño y corte</span>
+        <span class="service-card__arrow">→</span>
+      </div>
+
+      <div class="service-card service-card--active">
+        <div class="service-card__icon-wrapper">
+          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 3l3 3L8 19H5v-3L18 3zM14 7l3 3M9 14l1 1M3 21h3"/>
+          </svg>
+        </div>
+        <span class="service-card__text">Vacunación</span>
+        <span class="service-card__arrow">→</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-card__icon-wrapper">
+          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4zM6 12h2M16 12h2"/>
+          </svg>
+        </div>
+        <span class="service-card__text">Desparasita...</span>
+        <span class="service-card__arrow">→</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-card__icon-wrapper">
+          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v8M8 12h8"/>
+          </svg>
+        </div>
+        <span class="service-card__text">Esterilización</span>
+        <span class="service-card__arrow">→</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-card__icon-wrapper">
+          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L9 7H4l4 4-3 5 7-3 7 3-3-5 4-4h-5l-3-5z"/>
+          </svg>
+        </div>
+        <span class="service-card__text">Profilaxis</span>
+        <span class="service-card__arrow">→</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="emergency">
+    <div class="emergency__header">
+      <h2 class="emergency__title">ATENCIÓN DE EMERGENCIAS<br>VETERINARIA 24 HORAS</h2>
+
+      <div class="emergency__badges">
+        <div class="badge-item">
+          <span class="badge-item__icon">✓</span>
+          <span class="badge-item__text">Staff Especializado</span>
+        </div>
+        <div class="badge-item">
+          <span class="badge-item__icon">✓</span>
+          <span class="badge-item__text">La más Alta Tecnología</span>
+        </div>
+        <div class="badge-item">
+          <span class="badge-item__icon">✓</span>
+          <span class="badge-item__text">Infraestructura Moderna</span>
+        </div>
+        <div class="badge-item">
+          <span class="badge-item__icon">✓</span>
+          <span class="badge-item__text">Atención Integral 24/7</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="emergency__grid">
+      <div class="gallery-card">
+        <img src="/assets/images/vetidat.png" alt="Staff Médico Especializado" class="gallery-card__img">
+      </div>
+      <div class="gallery-card">
+        <img src="/assets/images/eco.png" alt="Infraestructura Moderna de la Clínica" class="gallery-card__img">
+      </div>
+      <div class="gallery-card">
+        <img src="/assets/images/oto.png" alt="Equipos de Alta Tecnología" class="gallery-card__img">
+      </div>
+      <div class="gallery-card">
+        <img src="/assets/images/siveriano.png" alt="Atención Médica Integral" class="gallery-card__img">
+      </div>
+    </div>
+  </section>
+
+</main>

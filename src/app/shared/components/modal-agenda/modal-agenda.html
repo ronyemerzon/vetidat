@@ -1,0 +1,73 @@
+<div class="modal-overlay" *ngIf="isOpen" (click)="onClose()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    <header class="modal-header">
+      <h2>Agendar una Consulta</h2>
+      <button class="modal-close-btn" (click)="onClose()">&times;</button>
+    </header>
+
+    <form [formGroup]="agendaForm" (ngSubmit)="onSubmit()">
+      <section class="modal-body">
+
+        <h3 class="form-section-title">Datos del Dueño</h3>
+        <div class="form-group">
+          <label>Nombre Completo</label>
+          <input type="text" formControlName="ownerName" placeholder="Ej. Juan Pérez" [class.error-input]="esInvalido('ownerName')">
+          <span class="error-text" *ngIf="esInvalido('ownerName')">El nombre es requerido (mínimo 3 letras).</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Teléfono (9 dígitos)</label>
+            <input type="tel" formControlName="ownerPhone" placeholder="987654321" [class.error-input]="esInvalido('ownerPhone')">
+            <span class="error-text" *ngIf="esInvalido('ownerPhone')">Teléfono inválido.</span>
+          </div>
+          <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input type="email" formControlName="ownerEmail" placeholder="juan@correo.com" [class.error-input]="esInvalido('ownerEmail')">
+            <span class="error-text" *ngIf="esInvalido('ownerEmail')">Ingresa un correo válido.</span>
+          </div>
+        </div>
+
+        <h3 class="form-section-title">Datos de la Mascota</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre de la Mascota</label>
+            <input type="text" formControlName="petName" placeholder="Ej. Firulais" [class.error-input]="esInvalido('petName')">
+            <span class="error-text" *ngIf="esInvalido('petName')">Este campo es requerido.</span>
+          </div>
+          <div class="form-group">
+            <label>Tipo de Mascota</label>
+            <select formControlName="petType" [class.error-input]="esInvalido('petType')">
+              <option value="" disabled selected>Selecciona...</option>
+              <option value="Perro">Perro</option>
+              <option value="Gato">Gato</option>
+              <option value="Ave">Ave</option>
+              <option value="Exótico">Exótico</option>
+            </select>
+            <span class="error-text" *ngIf="esInvalido('petType')">Selecciona una opción.</span>
+          </div>
+        </div>
+
+        <h3 class="form-section-title">Horario de la Cita</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Fecha</label>
+            <input type="date" formControlName="appointmentDate" [class.error-input]="esInvalido('appointmentDate')">
+            <span class="error-text" *ngIf="esInvalido('appointmentDate')">Selecciona una fecha.</span>
+          </div>
+          <div class="form-group">
+            <label>Hora</label>
+            <input type="time" formControlName="appointmentTime" [class.error-input]="esInvalido('appointmentTime')">
+            <span class="error-text" *ngIf="esInvalido('appointmentTime')">Selecciona una hora.</span>
+          </div>
+        </div>
+
+      </section>
+
+      <footer class="modal-footer">
+        <button type="button" class="btn-secondary" (click)="onClose()">Cancelar</button>
+        <button type="submit" class="btn-primary" [disabled]="agendaForm.invalid">Confirmar Cita</button>
+      </footer>
+    </form>
+  </div>
+</div>

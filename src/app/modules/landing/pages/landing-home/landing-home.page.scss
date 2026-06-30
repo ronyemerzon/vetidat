@@ -1,0 +1,327 @@
+$color-primary: #1d438a; // Azul marino de textos y logo
+$color-accent: #ff9100; // Naranja del botón activo
+$color-bg-orange: #fcd5a3; // Fondo naranja pastel del banner
+$color-bg-light: #fdfaf2; // Fondo crema suave inferior
+$color-white: #ffffff;
+$color-text-muted: #555555;
+
+// Reset básico local para asegurar consistencia
+:host {
+  display: block;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: $color-bg-light;
+  min-height: 100vh;
+}
+
+// Navbar Estilos
+.navbar {
+  background-color: $color-white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__logo {
+    height: 95px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__links {
+    display: flex;
+    gap: 2rem;
+  }
+
+  &__link {
+    color: $color-primary;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+}
+
+// Hero Section con Curva Orgánica
+.hero {
+  background-color: $color-bg-orange;
+  position: relative;
+  padding: 4rem 2rem 8rem 2rem; // Espacio inferior extra para la curva
+  overflow: hidden;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+  }
+
+  &__title {
+    font-size: 3rem;
+    color: $color-primary;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  &__subtitle {
+    font-size: 1.2rem;
+    color: $color-accent;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  &__text {
+    font-size: 1.1rem;
+    color: $color-primary;
+    margin-bottom: 2rem;
+    max-width: 450px;
+    line-height: 1.5;
+
+    @media (max-width: 768px) {
+      margin: 0 auto 2rem auto;
+    }
+  }
+
+  &__btn {
+    background-color: $color-accent;
+    color: $color-white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($color-accent, 5%);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__image-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__img {
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+  }
+
+  // Genera el arco orgánico inferior simulando la imagen
+  &__curve {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background-color: $color-bg-light;
+    border-radius: 100% 100% 0 0 / 100% 100% 0 0;
+    transform: scaleX(1.3) translateY(40px);
+  }
+}
+
+// Sección de Servicios Inferior
+.services {
+  max-width: 1240px;
+  margin: -4rem auto 4rem auto;
+  position: relative;
+  z-index: 10;
+  padding: 0 1.5rem;
+  text-align: center;
+
+  &__grid {
+    display: grid;
+    // Creamos automáticamente 6 columnas fluidas que bajan de fila solas en móvil
+    grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+    gap: 1.2rem;
+    justify-content: center;
+  }
+}
+
+// Estilos de las Tarjetas (Cards) blancas
+.service-card {
+  background-color: $color-white;
+  border-radius: 20px;
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // Alineado a la izquierda como la captura
+  text-align: left;
+  justify-content: space-between;
+  height: 180px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &__icon-wrapper {
+    color: $color-primary; // El icono por defecto toma color azul marino
+    transition: color 0.3s ease;
+  }
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  &__text {
+    color: $color-primary;
+    font-weight: 700;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    margin-top: auto;
+    margin-bottom: 0.5rem;
+  }
+
+  &__arrow {
+    color: $color-primary;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+
+  // --- LÓGICA DE HOVER INTERACTIVO (Igual a la imagen) ---
+  &:hover, &--active {
+    background-color: #fcd5a3; // Fondo naranja pastel idéntico
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(253, 213, 163, 0.4);
+
+    .service-card__icon-wrapper,
+    .service-card__text,
+    .service-card__arrow {
+      color: $color-primary; // Los textos e iconos se mantienen contrastados en azul marino
+    }
+
+    .service-card__arrow {
+      transform: translateX(4px); // Animación sutil de la flecha
+    }
+  }
+}
+
+// ... mantener tus estilos anteriores y agregar abajo:
+
+.emergency {
+  max-width: 1200px;
+  margin: 6rem auto;
+  padding: 0 2rem;
+  text-align: center;
+
+  &__header {
+    margin-bottom: 4rem;
+  }
+
+  &__title {
+    color: $color-primary;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    margin-bottom: 2rem;
+  }
+
+  // Contenedor horizontal de los checks/badges
+  &__badges {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+
+    @media (max-width: 768px) {
+      gap: 1.2rem;
+    }
+  }
+
+  // Cuadrícula de 2x2 para las fotos
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr; // Se vuelve una sola columna en móviles
+      gap: 1.5rem;
+    }
+  }
+}
+
+// Estilo de los elementos con Checkmark circular celeste
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  &__icon {
+    background-color: #d2e9f9; // Celeste suave idéntico a la imagen
+    color: #4da6e4; // Check azul/celeste intenso
+    font-weight: bold;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+  }
+
+  &__text {
+    color: #444444;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+}
+
+// Tarjetas de la galería de imágenes
+.gallery-card {
+  border-radius: 24px; // Esquinas súper curvadas y orgánicas como la muestra
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  background-color: $color-white;
+  height: 380px; // Altura fija uniforme para estandarizar las proporciones
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  &:hover {
+    transform: scale(1.02); // Pequeño zoom interactivo premium
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; // Hace que las imágenes llenen el espacio perfectamente sin deformarse
+    object-position: center;
+  }
+}
