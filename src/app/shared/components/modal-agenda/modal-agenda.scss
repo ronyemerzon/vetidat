@@ -93,13 +93,13 @@ $color-white: #ffffff;
 }
 
 .modal-container {
-  max-width: 550px; // Ampliamos ligeramente para que quepan las columnas cómodamente
+  max-width: 550px;
 }
 
 .modal-body {
   padding: 1.5rem 2rem;
   max-height: 70vh;
-  overflow-y: auto; // Permite scroll si la pantalla es muy pequeña (móviles)
+  overflow-y: auto;
 }
 
 .form-section-title {

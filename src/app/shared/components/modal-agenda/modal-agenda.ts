@@ -47,10 +47,10 @@ export class ModalAgenda {
   onSubmit(): void {
     if (this.agendaForm.valid){
       console.log('Datos enviados con éxito: ', this.agendaForm.value);
-      // Aquí procesaremos los datos o los mandaremos a un servicio más adelante
+      // Aquí procesaremos los datos con spring boot
       this.onClose();
     } else {
-      this.agendaForm.markAllAsTouched(); // Forzar la muestra de errores visuales
+      this.agendaForm.markAllAsTouched();
     }
   }
 }

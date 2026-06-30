@@ -5,7 +5,7 @@ $color-bg-light: #fdfaf2; // Fondo crema suave inferior
 $color-white: #ffffff;
 $color-text-muted: #555555;
 
-// Reset básico local para asegurar consistencia
+
 :host {
   display: block;
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -59,11 +59,11 @@ $color-text-muted: #555555;
   }
 }
 
-// Hero Section con Curva Orgánica
+
 .hero {
   background-color: $color-bg-orange;
   position: relative;
-  padding: 4rem 2rem 8rem 2rem; // Espacio inferior extra para la curva
+  padding: 4rem 2rem 8rem 2rem;
   overflow: hidden;
 
   &__container {
@@ -139,7 +139,6 @@ $color-text-muted: #555555;
     object-fit: contain;
   }
 
-  // Genera el arco orgánico inferior simulando la imagen
   &__curve {
     position: absolute;
     bottom: 0;
@@ -163,21 +162,20 @@ $color-text-muted: #555555;
 
   &__grid {
     display: grid;
-    // Creamos automáticamente 6 columnas fluidas que bajan de fila solas en móvil
     grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
     gap: 1.2rem;
     justify-content: center;
   }
 }
 
-// Estilos de las Tarjetas (Cards) blancas
+// Estilos de las Tarjetas
 .service-card {
   background-color: $color-white;
   border-radius: 20px;
   padding: 1.5rem 1.2rem;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; // Alineado a la izquierda como la captura
+  align-items: flex-start;
   text-align: left;
   justify-content: space-between;
   height: 180px;
@@ -187,7 +185,7 @@ $color-text-muted: #555555;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   &__icon-wrapper {
-    color: $color-primary; // El icono por defecto toma color azul marino
+    color: $color-primary;
     transition: color 0.3s ease;
   }
 
@@ -212,25 +210,22 @@ $color-text-muted: #555555;
     transition: transform 0.3s ease;
   }
 
-  // --- LÓGICA DE HOVER INTERACTIVO (Igual a la imagen) ---
   &:hover, &--active {
-    background-color: #fcd5a3; // Fondo naranja pastel idéntico
+    background-color: #fcd5a3;
     transform: translateY(-4px);
     box-shadow: 0 12px 30px rgba(253, 213, 163, 0.4);
 
     .service-card__icon-wrapper,
     .service-card__text,
     .service-card__arrow {
-      color: $color-primary; // Los textos e iconos se mantienen contrastados en azul marino
+      color: $color-primary;
     }
 
     .service-card__arrow {
-      transform: translateX(4px); // Animación sutil de la flecha
+      transform: translateX(4px);
     }
   }
 }
-
-// ... mantener tus estilos anteriores y agregar abajo:
 
 .emergency {
   max-width: 1200px;
@@ -251,7 +246,6 @@ $color-text-muted: #555555;
     margin-bottom: 2rem;
   }
 
-  // Contenedor horizontal de los checks/badges
   &__badges {
     display: flex;
     justify-content: center;
@@ -270,21 +264,20 @@ $color-text-muted: #555555;
     gap: 2rem;
 
     @media (max-width: 768px) {
-      grid-template-columns: 1fr; // Se vuelve una sola columna en móviles
+      grid-template-columns: 1fr;
       gap: 1.5rem;
     }
   }
 }
 
-// Estilo de los elementos con Checkmark circular celeste
 .badge-item {
   display: flex;
   align-items: center;
   gap: 0.6rem;
 
   &__icon {
-    background-color: #d2e9f9; // Celeste suave idéntico a la imagen
-    color: #4da6e4; // Check azul/celeste intenso
+    background-color: #d2e9f9;
+    color: #4da6e4;
     font-weight: bold;
     width: 22px;
     height: 22px;
@@ -302,26 +295,25 @@ $color-text-muted: #555555;
   }
 }
 
-// Tarjetas de la galería de imágenes
 .gallery-card {
-  border-radius: 24px; // Esquinas súper curvadas y orgánicas como la muestra
+  border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
   background-color: $color-white;
-  height: 380px; // Altura fija uniforme para estandarizar las proporciones
+  height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   &:hover {
-    transform: scale(1.02); // Pequeño zoom interactivo premium
+    transform: scale(1.02);
   }
 
   &__img {
     width: 100%;
     height: 100%;
-    object-fit: cover; // Hace que las imágenes llenen el espacio perfectamente sin deformarse
+    object-fit: cover;
     object-position: center;
   }
 }
