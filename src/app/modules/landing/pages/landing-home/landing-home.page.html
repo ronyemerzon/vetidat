@@ -28,10 +28,7 @@
     <div class="services__grid">
       <div class="service-card" [routerLink]="['/servicio', 'consulta-veterinaria']">
         <div class="service-card__icon-wrapper">
-          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4.5 16.5c-1.5-2.5-1.5-5.5 0-8s4.5-2.5 6 0l1.5 1.5 1.5-1.5c1.5-2.5 4.5-2.5 6 0s1.5 5.5 0 8L12 21l-7.5-4.5z"/>
-            <path d="M12 5v4M10 7h4"/>
-          </svg>
+          <img src="assets/images/consulta.png" alt="Consulta veterinaria" class="service-card__icon">
         </div>
         <span class="service-card__text">Consulta veterinaria</span>
         <span class="service-card__arrow">→</span>
@@ -39,9 +36,7 @@
 
       <div class="service-card" [routerLink]="['/servicio', 'banio-y-corte']">
         <div class="service-card__icon-wrapper">
-          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 12a8 8 0 0 1 16 0v4H4v-4zM2 16h20M6 20h2M16 20h2"/>
-          </svg>
+          <img src="assets/images/champu.png" alt="Baño y corte" class="service-card__icon">
         </div>
         <span class="service-card__text">Baño y corte</span>
         <span class="service-card__arrow">→</span>
@@ -49,9 +44,7 @@
 
       <div class="service-card service-card--active" [routerLink]="['/servicio', 'vacunacion']">
         <div class="service-card__icon-wrapper">
-          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M18 3l3 3L8 19H5v-3L18 3zM14 7l3 3M9 14l1 1M3 21h3"/>
-          </svg>
+          <img src="assets/images/veterinario.png" alt="Vacunación" class="service-card__icon">
         </div>
         <span class="service-card__text">Vacunación</span>
         <span class="service-card__arrow">→</span>
@@ -59,9 +52,7 @@
 
       <div class="service-card" [routerLink]="['/servicio', 'desparasitacion']">
         <div class="service-card__icon-wrapper">
-          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 14a4 4 0 1 1 4-4 4 4 0 0 1-4 4zM6 12h2M16 12h2"/>
-          </svg>
+          <img src="assets/images/antipulgas.png" alt="Desparasitación" class="service-card__icon">
         </div>
         <span class="service-card__text">Desparasitación</span>
         <span class="service-card__arrow">→</span>
@@ -69,10 +60,7 @@
 
       <div class="service-card" [routerLink]="['/servicio', 'esterilizacion']">
         <div class="service-card__icon-wrapper">
-          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path d="M12 8v8M8 12h8"/>
-          </svg>
+          <img src="assets/images/esterilizacion.png" alt="Esterilización" class="service-card__icon">
         </div>
         <span class="service-card__text">Esterilización</span>
         <span class="service-card__arrow">→</span>
@@ -80,9 +68,7 @@
 
       <div class="service-card" [routerLink]="['/servicio', 'profilaxis']">
         <div class="service-card__icon-wrapper">
-          <svg class="service-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 2L9 7H4l4 4-3 5 7-3 7 3-3-5 4-4h-5l-3-5z"/>
-          </svg>
+          <img src="assets/images/diente.png" alt="Profilaxis" class="service-card__icon">
         </div>
         <span class="service-card__text">Profilaxis</span>
         <span class="service-card__arrow">→</span>
@@ -131,3 +117,5 @@
   </section>
 
 </main>
+
+<app-footer></app-footer>

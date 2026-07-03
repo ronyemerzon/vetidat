@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LandingHomePage } from './modules/landing/pages/landing-home/landing-home.page';
-import { DetalleServicioPage } from './modules/landing/pages/detalle-servicio/detalle-servicio.page';
+import { DetalleServicioPage } from './modules/servicios/pages/detalle-servicio/detalle-servicio.page';
 
 export const routes: Routes = [
   { path: '', component: LandingHomePage },

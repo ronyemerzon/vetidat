@@ -1,0 +1,144 @@
+$color-primary: #1d438a;
+$color-accent: #ff9100;
+$color-bg-light: #fdfaf2;
+$color-white: #ffffff;
+$text-dark: #333333;
+$text-muted: #666666;
+
+.vet-footer {
+  background-color: $color-white;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 4rem;
+  font-family: inherit;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 3rem 2rem;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 3rem;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__logo {
+    height: 65px;
+    width: auto;
+    object-fit: contain;
+    align-self: flex-start;
+  }
+
+  &__description {
+    color: $text-muted;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 1rem;
+    font-size: 1.2rem;
+
+    .social-link {
+      text-decoration: none;
+      transition: transform 0.2s ease;
+      &:hover { transform: scale(1.15); }
+    }
+  }
+
+  &__title {
+    color: $color-primary;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 35px;
+      height: 2px;
+      background-color: $color-accent;
+    }
+  }
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+
+    &--text {
+      color: $text-muted;
+      font-size: 0.9rem;
+      line-height: 1.4;
+
+      strong { color: $color-primary; }
+    }
+  }
+
+  &__link {
+    color: $text-muted;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+
+    &:hover {
+      color: $color-accent;
+      padding-left: 4px;
+    }
+  }
+
+  // Estilos de la franja final de Copyright
+  &__bottom {
+    background-color: $color-bg-light;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.02);
+
+    &-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      color: $text-muted;
+      font-size: 0.8rem;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    &-links {
+      display: flex;
+      gap: 1.5rem;
+
+      a {
+        color: $text-muted;
+        text-decoration: none;
+        &:hover { color: $color-primary; }
+      }
+    }
+  }
+}
