@@ -41,7 +41,6 @@ export class ModalAgenda {
 
   onClose(): void {
     this.closeModal.emit();
-    this.closeModal.emit();
   }
 
   onSubmit(): void {

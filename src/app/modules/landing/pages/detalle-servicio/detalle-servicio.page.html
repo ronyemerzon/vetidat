@@ -1,0 +1,100 @@
+<div class="page-container" *ngIf="servicioActual; else noEncontrado">
+  <!-- Cabecera de Retorno (Breadcrumb) -->
+  <div class="breadcrumb">
+    <a routerLink="/" class="breadcrumb__back">
+      <span class="breadcrumb__icon">←</span> Volver al Inicio
+    </a>
+    <span class="breadcrumb__separator">/</span>
+    <span class="breadcrumb__current">{{ servicioActual.nombre }}</span>
+  </div>
+
+  <div class="servicio-layout">
+    <!-- Contenido Principal -->
+    <main class="servicio-info">
+      <div class="servicio-header">
+        <h1 class="servicio-header__title">{{ servicioActual.nombre }}</h1>
+        <p class="servicio-header__sub">{{ servicioActual.descripcionBreve }}</p>
+      </div>
+
+      <div class="servicio-image-container">
+        <img [src]="servicioActual.imagenPath" [alt]="servicioActual.nombre" class="servicio-image">
+      </div>
+
+      <section class="servicio-section">
+        <h2 class="servicio-section__title">Descripción Detallada</h2>
+        <p class="servicio-section__text">{{ servicioActual.descripcionLarga }}</p>
+      </section>
+
+      <section class="servicio-section">
+        <h2 class="servicio-section__title">Beneficios del Servicio</h2>
+        <ul class="beneficios-list">
+          <li class="beneficios-list__item" *ngFor="let beneficio of servicioActual.beneficios">
+            <span class="beneficios-list__check">✓</span>
+            {{ beneficio }}
+          </li>
+        </ul>
+      </section>
+
+      <section class="servicio-section servicio-section--alert" *ngIf="servicioActual.recomendaciones.length > 0">
+        <h3 class="servicio-section__subtitle">📌 Recomendaciones para el día de la cita:</h3>
+        <ul class="recomendaciones-list">
+          <li *ngFor="let recomendacion of servicioActual.recomendaciones">
+            {{ recomendacion }}
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Barra Lateral de Reserva (Sidebar) -->
+    <aside class="reserva-sidebar">
+      <div class="reserva-card">
+        <h3 class="reserva-card__title">Información de Consulta</h3>
+        
+        <div class="reserva-detail">
+          <div class="reserva-detail__item">
+            <span class="reserva-detail__label">⏱️ Duración Estimada:</span>
+            <span class="reserva-detail__value">{{ servicioActual.duracionEstimada }}</span>
+          </div>
+          <div class="reserva-detail__item">
+            <span class="reserva-detail__label">💰 Costo Referencial:</span>
+            <span class="reserva-detail__value highlight">{{ servicioActual.precioAproximado }}</span>
+          </div>
+        </div>
+
+        <p class="reserva-card__disclaimer">
+          * El costo exacto será determinado por el médico veterinario durante la evaluación física.
+        </p>
+
+        <button class="reserva-card__btn" (click)="alternarModal(true)">
+          📅 Reservar Turno
+        </button>
+      </div>
+
+      <div class="atencion-urgencias">
+        <span class="atencion-urgencias__icon">🚨</span>
+        <div class="atencion-urgencias__text">
+          <strong>¿Es una Emergencia?</strong>
+          <p>Atendemos urgencias veterinarias las 24 horas, los 7 días de la semana sin necesidad de cita previa.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal de Reservas -->
+  <app-modal-agenda
+    [isOpen]="esModalAbierto"
+    (closeModal)="alternarModal(false)">
+  </app-modal-agenda>
+</div>
+
+<!-- Plantilla en caso no se encuentre el servicio -->
+<ng-template #noEncontrado>
+  <div class="no-encontrado">
+    <div class="no-encontrado__content">
+      <span class="no-encontrado__icon">🐾</span>
+      <h2>¡Servicio No Encontrado!</h2>
+      <p>Lo sentimos, el servicio solicitado no se encuentra registrado en nuestro catálogo o no está disponible actualmente.</p>
+      <button routerLink="/" class="btn-home">Ir al Inicio</button>
+    </div>
+  </div>
+</ng-template>

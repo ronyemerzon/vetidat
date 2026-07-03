@@ -1,0 +1,358 @@
+$color-primary: #1d438a;
+$color-accent: #ff9100;
+$color-white: #ffffff;
+$color-bg-light: #fdfaf2;
+$color-bg-orange: #fcd5a3;
+
+:host {
+  display: block;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: $color-bg-light;
+  min-height: calc(100vh - 95px); // Ajuste descontando el navbar
+  padding: 2rem 1.5rem;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+// Breadcrumb
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
+
+  &__back {
+    color: $color-primary;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $color-accent;
+    }
+  }
+
+  &__separator {
+    color: #ccc;
+  }
+
+  &__current {
+    font-weight: 500;
+    color: #555;
+  }
+}
+
+// Layout de dos columnas
+.servicio-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @media (min-width: 992px) {
+    grid-template-columns: 2.5fr 1fr;
+  }
+}
+
+// Columna del servicio
+.servicio-info {
+  background-color: $color-white;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.servicio-header {
+  margin-bottom: 1.5rem;
+
+  &__title {
+    color: $color-primary;
+    font-size: 2.2rem;
+    font-weight: 800;
+    margin: 0 0 0.5rem 0;
+  }
+
+  &__sub {
+    color: $color-accent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+.servicio-image-container {
+  border-radius: 16px;
+  overflow: hidden;
+  height: 350px;
+  width: 100%;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.servicio-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.servicio-section {
+  margin-bottom: 2rem;
+
+  &__title {
+    color: $color-primary;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid $color-bg-orange;
+  }
+
+  &__subtitle {
+    color: $color-primary;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  &__text {
+    color: #444;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &--alert {
+    background-color: #fff9e6;
+    border-left: 4px solid $color-accent;
+    padding: 1.2rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+  }
+}
+
+// Lista de Beneficios
+.beneficios-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+
+  @media (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  &__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: #444;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  &__check {
+    color: #4caf50;
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+}
+
+// Recomendaciones
+.recomendaciones-list {
+  padding-left: 1.2rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  li {
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+
+// Sidebar de Reserva
+.reserva-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.reserva-card {
+  background-color: $color-white;
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  position: sticky;
+  top: 120px;
+
+  &__title {
+    color: $color-primary;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 1.2rem 0;
+    text-align: center;
+  }
+
+  &__disclaimer {
+    font-size: 0.75rem;
+    color: #888;
+    line-height: 1.3;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__btn {
+    width: 100%;
+    background-color: $color-accent;
+    color: $color-white;
+    border: none;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 145, 0, 0.2);
+    transition: transform 0.2s ease, background-color 0.3s ease;
+
+    &:hover {
+      background-color: darken($color-accent, 5%);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.reserva-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: $color-bg-light;
+  padding: 1.2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.02);
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__label {
+    font-size: 0.8rem;
+    color: #777;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  &__value {
+    font-size: 1rem;
+    color: $color-primary;
+    font-weight: 700;
+
+    &.highlight {
+      font-size: 1.2rem;
+      color: $color-accent;
+    }
+  }
+}
+
+// Sección de urgencias en sidebar
+.atencion-urgencias {
+  background-color: #fff0f0;
+  border-radius: 16px;
+  padding: 1.2rem;
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  border: 1px solid #ffe3e3;
+
+  &__icon {
+    font-size: 1.5rem;
+  }
+
+  &__text {
+    strong {
+      color: #c62828;
+      font-size: 0.95rem;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    p {
+      margin: 0;
+      color: #666;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+  }
+}
+
+// Vista No Encontrado
+.no-encontrado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+
+  &__content {
+    background-color: $color-white;
+    padding: 3rem 2rem;
+    border-radius: 24px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.03);
+    max-width: 450px;
+    border: 1px solid rgba(0,0,0,0.02);
+  }
+
+  &__icon {
+    font-size: 3.5rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    color: $color-primary;
+    margin-top: 0;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
+  }
+
+  p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+  }
+
+  .btn-home {
+    background-color: $color-primary;
+    color: $color-white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: darken($color-primary, 5%);
+    }
+  }
+}

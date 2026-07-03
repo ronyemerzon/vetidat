@@ -52,13 +52,13 @@
         <div class="form-grid">
           <div class="form-group">
             <label>Fecha</label>
-            <input type="date" formControlName="appointmentDate" [class.error-input]="esInvalido('appointmentDate')">
-            <span class="error-text" *ngIf="esInvalido('appointmentDate')">Selecciona una fecha.</span>
+            <input type="date" formControlName="fechaCita" [class.error-input]="esInvalido('fechaCita')">
+            <span class="error-text" *ngIf="esInvalido('fechaCita')">Selecciona una fecha.</span>
           </div>
           <div class="form-group">
             <label>Hora</label>
-            <input type="time" formControlName="appointmentTime" [class.error-input]="esInvalido('appointmentTime')">
-            <span class="error-text" *ngIf="esInvalido('appointmentTime')">Selecciona una hora.</span>
+            <input type="time" formControlName="horaCita" [class.error-input]="esInvalido('horaCita')">
+            <span class="error-text" *ngIf="esInvalido('horaCita')">Selecciona una hora.</span>
           </div>
         </div>
 
