@@ -1,0 +1,177 @@
+<div class="container py-4">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3 text-center text-md-start">
+    <div>
+      <h1 class="display-5 text-primary fw-bold">
+        <i class="bi bi-calendar-event-fill me-2"></i>Agenda y Citas Médicas
+      </h1>
+      <p class="text-muted mb-0">Controla el calendario de disponibilidad, confirma citas y gestiona las solicitudes de los clientes.</p>
+    </div>
+    <div>
+      <button class="btn btn-warning text-white fw-bold px-4 py-2.5 rounded-3 shadow-sm hover-scale" (click)="abrirModal()">
+        <i class="bi bi-calendar-plus-fill me-2"></i>Nueva Cita
+      </button>
+    </div>
+  </div>
+
+  <!-- FILTROS Y BÚSQUEDA -->
+  <div class="card border-0 shadow-sm rounded-4 mb-4">
+    <div class="card-body p-4 bg-white">
+      <div class="row g-3 align-items-center">
+        <!-- Selector de Estado -->
+        <div class="col-lg-6">
+          <label class="form-label small fw-bold text-secondary mb-2 d-block">Filtrar por Estado</label>
+          <div class="btn-group w-100 flex-wrap" role="group">
+            <button type="button" class="btn btn-outline-primary" [class.active]="filtroEstado === 'todas'" (click)="filtroEstado = 'todas'; filtrarCitas()">Todas</button>
+            <button type="button" class="btn btn-outline-warning" [class.active]="filtroEstado === 'pendiente'" (click)="filtroEstado = 'pendiente'; filtrarCitas()">Pendientes</button>
+            <button type="button" class="btn btn-outline-primary animate-btn" [class.active]="filtroEstado === 'confirmada'" (click)="filtroEstado = 'confirmada'; filtrarCitas()">Confirmadas</button>
+            <button type="button" class="btn btn-outline-success" [class.active]="filtroEstado === 'completada'" (click)="filtroEstado = 'completada'; filtrarCitas()">Completadas</button>
+            <button type="button" class="btn btn-outline-danger" [class.active]="filtroEstado === 'cancelada'" (click)="filtroEstado = 'cancelada'; filtrarCitas()">Canceladas</button>
+          </div>
+        </div>
+
+        <!-- Buscador -->
+        <div class="col-lg-6">
+          <label for="buscarCita" class="form-label small fw-bold text-secondary mb-2">Buscador Rápido</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0 text-muted rounded-start-3">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="buscarCita" [(ngModel)]="busqueda" (input)="filtrarCitas()" 
+                   class="form-control border-start-0 ps-0 rounded-end-3" 
+                   placeholder="Buscar por mascota, dueño o motivo...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVISO DE CITA PRÓXIMA LEYENDA -->
+  <div class="alert alert-info border-0 shadow-sm rounded-4 d-flex align-items-center p-3 mb-4 bg-info-subtle">
+    <i class="bi bi-info-circle-fill fs-4 me-3 text-info"></i>
+    <div class="small">
+      Las citas destacadas en <span class="badge bg-danger-subtle text-danger border border-danger-subtle">Rojo</span> corresponden al día de <strong>hoy</strong>. Las destacadas en <span class="badge bg-warning-subtle text-warning border border-warning-subtle">Naranja</span> corresponden al día de <strong>mañana</strong>.
+    </div>
+  </div>
+
+  <!-- LISTADO DE TARJETAS DE CITA -->
+  <div class="row g-3">
+    <div class="col-12" *ngFor="let c of citasFiltradas">
+      <div [appResaltarProxima]="c.fecha" class="card border-0 shadow-sm rounded-4 overflow-hidden cita-item-card bg-white">
+        <div class="card-body p-4">
+          <div class="row g-3 align-items-center">
+            
+            <!-- Mascota & Especie -->
+            <div class="col-md-3 border-end border-light-subtle pe-md-4">
+              <div *ngIf="getMascota(c.mascotaId) as mascota; else sinMascota">
+                <div class="d-flex align-items-center">
+                  <div class="especie-avatar-sm me-3 text-white rounded-circle d-flex align-items-center justify-content-center"
+                       [ngClass]="{
+                         'bg-info': mascota.especie === 'Perro',
+                         'bg-success': mascota.especie === 'Gato',
+                         'bg-warning': mascota.especie === 'Ave',
+                         'bg-secondary': mascota.especie !== 'Perro' && mascota.especie !== 'Gato' && mascota.especie !== 'Ave'
+                       }">
+                    <i class="bi fs-5" 
+                       [ngClass]="{
+                         'bi-dog': mascota.especie === 'Perro',
+                         'bi-cat': mascota.especie === 'Gato',
+                         'bi-twitter': mascota.especie === 'Ave',
+                         'bi-heart-fill': mascota.especie !== 'Perro' && mascota.especie !== 'Gato' && mascota.especie !== 'Ave'
+                       }"></i>
+                  </div>
+                  <div>
+                    <h5 class="mb-0 fw-bold text-primary">{{ mascota.nombre }}</h5>
+                    <span class="small text-muted">{{ mascota.especie }} ({{ mascota.raza }})</span>
+                  </div>
+                </div>
+              </div>
+              <ng-template #sinMascota>
+                <span class="text-danger small">Mascota no identificada</span>
+              </ng-template>
+            </div>
+
+            <!-- Detalles de Fecha, Hora y Motivo -->
+            <div class="col-md-5">
+              <div class="d-flex flex-column gap-1">
+                <div class="d-flex align-items-center gap-2 text-dark small fw-semibold">
+                  <i class="bi bi-calendar3 text-primary"></i>
+                  <span>{{ c.fecha | fechaAmigable }}</span>
+                  <span class="badge bg-light text-dark border ms-2">
+                    <i class="bi bi-clock me-1"></i>{{ c.hora }}
+                  </span>
+                </div>
+                <div class="text-secondary mt-1">
+                  <strong>Motivo:</strong> {{ c.motivo }}
+                </div>
+                <div *ngIf="getDueno(c.duenoId) as dueno" class="text-muted small mt-1">
+                  <strong>Dueño:</strong> {{ dueno.nombre }} (Cel: {{ dueno.telefono }})
+                </div>
+              </div>
+            </div>
+
+            <!-- Estado de la Cita -->
+            <div class="col-md-2 text-md-center">
+              <span class="badge px-3 py-2 rounded-pill fw-semibold border border-light-subtle d-inline-block shadow-sm" 
+                    [ngClass]="obtenerClaseBadge(c.estado)">
+                {{ c.estado | estadoCita }}
+              </span>
+            </div>
+
+            <!-- Acciones -->
+            <div class="col-md-2 text-end">
+              <div class="d-flex flex-row flex-md-column gap-2 justify-content-end align-items-end">
+                
+                <!-- Botón Confirmar (si está pendiente) -->
+                <button *ngIf="c.estado === 'pendiente'" 
+                        (click)="cambiarEstado(c.id, 'confirmada')" 
+                        class="btn btn-sm btn-outline-primary w-100 rounded-3" 
+                        title="Confirmar Cita">
+                  <i class="bi bi-check2-all me-1"></i>Confirmar
+                </button>
+
+                <!-- Botón Completar (si está confirmada o pendiente) -->
+                <button *ngIf="c.estado === 'confirmada' || c.estado === 'pendiente'" 
+                        (click)="cambiarEstado(c.id, 'completada')" 
+                        class="btn btn-sm btn-outline-success w-100 rounded-3" 
+                        title="Completar Atención">
+                  <i class="bi bi-check-circle me-1"></i>Atender
+                </button>
+
+                <!-- Botón Cancelar (si está pendiente o confirmada) -->
+                <button *ngIf="c.estado === 'pendiente' || c.estado === 'confirmada'" 
+                        (click)="cambiarEstado(c.id, 'cancelada')" 
+                        class="btn btn-sm btn-outline-danger w-100 rounded-3" 
+                        title="Cancelar Cita">
+                  <i class="bi bi-x-circle me-1"></i>Cancelar
+                </button>
+
+                <!-- Botón Eliminar (Siempre visible) -->
+                <button (click)="eliminarCita(c.id)" 
+                        class="btn btn-sm btn-outline-secondary w-100 border-0 rounded-3 text-danger" 
+                        title="Eliminar del Historial">
+                  <i class="bi bi-trash3 me-1"></i>Eliminar
+                </button>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sin resultados -->
+    <div class="col-12 text-center py-5 bg-white rounded-4 shadow-sm" *ngIf="citasFiltradas.length === 0">
+      <i class="bi bi-calendar-x text-muted fs-1 mb-3 d-block"></i>
+      <h5 class="text-secondary fw-semibold">No hay citas programadas</h5>
+      <p class="text-muted">No se encontraron citas que coincidan con los filtros seleccionados.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para programar cita -->
+<app-modal-agenda 
+  [isOpen]="isModalOpen" 
+  (closeModal)="cerrarModal()" 
+  (appointmentAdded)="cargarCitas()">
+</app-modal-agenda>

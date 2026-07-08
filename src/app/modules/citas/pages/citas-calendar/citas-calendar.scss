@@ -1,0 +1,47 @@
+$color-primary: #1d438a;
+$color-accent: #ff9100;
+
+.especie-avatar-sm {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.04);
+
+  i {
+    font-size: 1.25rem;
+  }
+}
+
+.cita-item-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+  border-left: 5px solid #eceff1; // color neutro por defecto
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(29, 67, 138, 0.06) !important;
+  }
+}
+
+.hover-scale {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+
+  &:hover {
+    transform: scale(1.03);
+    opacity: 0.95;
+  }
+}
+
+.btn-group .btn {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: rgba($color-primary, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba($color-primary, 0.15);
+}

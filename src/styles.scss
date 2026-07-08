@@ -1,4 +1,15 @@
+// Custom Bootstrap variables
+$primary: #1d438a;
+$warning: #ff9100;
+$light: #fdfaf2;
+$body-bg: #fdfaf2;
+
+@import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+
+// Existing custom variables (retained for compatibility)
 $vet-primary: #1d438a;
 $vet-accent: #ff9100;
 $vet-bg-light: #fdfaf2;
 $vet-bg-orange: #fcd5a3;
+

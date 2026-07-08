@@ -1,0 +1,37 @@
+$color-primary: #1d438a;
+$color-accent: #ff9100;
+
+.especie-avatar {
+  width: 54px;
+  height: 54px;
+  min-width: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+  i {
+    font-size: 1.6rem;
+  }
+}
+
+.mascota-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(29, 67, 138, 0.08) !important;
+  }
+}
+
+.btn-group .btn {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: rgba($color-primary, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba($color-primary, 0.15);
+}

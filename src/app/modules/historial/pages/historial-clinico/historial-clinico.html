@@ -1,0 +1,288 @@
+<div class="container py-4">
+  <div class="row mb-4 align-items-center">
+    <div class="col-md-6 text-center text-md-start">
+      <h1 class="display-5 text-primary fw-bold">
+        <i class="bi bi-folder2-open me-2"></i>Historial Clínico Digital
+      </h1>
+      <p class="text-muted mb-0">Administra y consulta las atenciones médicas previas de cada mascota.</p>
+    </div>
+    
+    <!-- Selector de Mascota -->
+    <div class="col-md-6 mt-3 mt-md-0">
+      <div class="card border-0 shadow-sm rounded-4 p-2 bg-white">
+        <div class="d-flex align-items-center p-2">
+          <i class="bi bi-search text-primary fs-4 me-3"></i>
+          <div class="flex-grow-1">
+            <label for="selectMascota" class="form-label small fw-bold text-secondary mb-1">Seleccionar Paciente</label>
+            <select id="selectMascota" [value]="mascotaSeleccionadaId" (change)="onMascotaChange($event)" class="form-select border-0 fs-5 fw-bold text-primary p-0 bg-transparent shadow-none">
+              <option value="" disabled *ngIf="mascotas.length === 0">No hay mascotas registradas</option>
+              <option *ngFor="let m of mascotas" [value]="m.id">{{ m.nombre }} (Especie: {{ m.especie }} | ID: {{ m.id }})</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4" *ngIf="mascotaSeleccionada; else selectMascotaMsg">
+    <!-- PANEL DE DETALLES DE MASCOTA Y DUEÑO (Arriba / Horizontal) -->
+    <div class="col-12">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden info-paciente-card bg-white">
+        <div class="card-body p-4">
+          <div class="row g-3">
+            <div class="col-md-6 d-flex align-items-center border-end border-light-subtle">
+              <div class="avatar-pet me-3 bg-primary text-white rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi fs-2" [ngClass]="{
+                  'bi-dog': mascotaSeleccionada.especie === 'Perro',
+                  'bi-cat': mascotaSeleccionada.especie === 'Gato',
+                  'bi-twitter': mascotaSeleccionada.especie === 'Ave',
+                  'bi-heart-fill': mascotaSeleccionada.especie !== 'Perro' && mascotaSeleccionada.especie !== 'Gato' && mascotaSeleccionada.especie !== 'Ave'
+                }"></i>
+              </div>
+              <div>
+                <h4 class="mb-1 text-primary fw-bold">{{ mascotaSeleccionada.nombre }}</h4>
+                <p class="mb-0 text-secondary">
+                  <strong>Detalles:</strong> {{ mascotaSeleccionada.especie }} &nbsp;|&nbsp; 
+                  <strong>Raza:</strong> {{ mascotaSeleccionada.raza }} &nbsp;|&nbsp; 
+                  <strong>Edad:</strong> {{ mascotaSeleccionada.edad }} años &nbsp;|&nbsp; 
+                  <strong>Peso:</strong> {{ mascotaSeleccionada.peso }} kg
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 d-flex align-items-center ps-md-4">
+              <div class="avatar-owner me-3 bg-warning text-white rounded-circle d-flex align-items-center justify-content-center">
+                <i class="bi bi-person-badge fs-2"></i>
+              </div>
+              <div *ngIf="duenoMascota">
+                <h5 class="mb-1 fw-bold text-dark">{{ duenoMascota.nombre }} <span class="badge bg-light text-secondary border fw-normal ms-2">Responsable</span></h5>
+                <p class="mb-0 text-muted small">
+                  <i class="bi bi-telephone-fill me-1"></i>{{ duenoMascota.telefono }} &nbsp;|&nbsp; 
+                  <i class="bi bi-envelope-fill me-1"></i>{{ duenoMascota.email }}
+                </p>
+                <p class="mb-0 text-muted small mt-1">
+                  <i class="bi bi-geo-alt-fill me-1"></i>{{ duenoMascota.direccion }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA HISTORIAL DE ATENCIONES (Línea de tiempo) - (7/12) -->
+    <div class="col-lg-7">
+      <div class="card border-0 shadow-sm rounded-4 bg-white">
+        <div class="card-header bg-primary text-white p-3 d-flex align-items-center justify-content-between">
+          <h5 class="card-title mb-0 fw-bold">
+            <i class="bi bi-clock-history me-2"></i>Línea de Tiempo Médica
+          </h5>
+          <span class="badge bg-white text-primary fw-bold px-2.5 py-1.5 rounded-pill">
+            {{ historial.length }} registros
+          </span>
+        </div>
+        <div class="card-body p-4">
+          <div class="timeline" *ngIf="historial.length > 0; else sinHistorial">
+            
+            <div class="timeline-item" *ngFor="let h of historial">
+              <!-- Icono dinámico según el tipo -->
+              <div class="timeline-badge" [ngClass]="{
+                'bg-info-subtle text-info border border-info': h.tipo === 'vacuna',
+                'bg-success-subtle text-success border border-success': h.tipo === 'tratamiento',
+                'bg-danger-subtle text-danger border border-danger': h.tipo === 'cirugia'
+              }">
+                <i class="bi" [ngClass]="{
+                  'bi-capsule': h.tipo === 'vacuna',
+                  'bi-heart-pulse': h.tipo === 'tratamiento',
+                  'bi-activity': h.tipo === 'cirugia'
+                }"></i>
+              </div>
+              
+              <!-- Contenido del Registro -->
+              <div class="timeline-card p-3 rounded-4 border bg-light border-light-subtle shadow-sm mb-4">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <span class="badge px-2.5 py-1.5 rounded-pill text-uppercase border font-monospace small" [ngClass]="{
+                    'bg-info-subtle text-info border-info-subtle': h.tipo === 'vacuna',
+                    'bg-success-subtle text-success border-success-subtle': h.tipo === 'tratamiento',
+                    'bg-danger-subtle text-danger border-danger-subtle': h.tipo === 'cirugia'
+                  }">
+                    {{ h.tipo }}
+                  </span>
+                  <span class="text-muted small fw-semibold">
+                    <i class="bi bi-calendar-check me-1"></i>{{ h.fecha }}
+                  </span>
+                </div>
+                
+                <h6 class="mb-2 text-dark font-sans fw-bold">Diagnóstico: "{{ h.diagnostico }}"</h6>
+                
+                <!-- Polimorfismo en acción: renderizado dinámico del detalle formateado por la clase correspondiente -->
+                <p class="mb-2 text-secondary small bg-white p-3 rounded-3 border border-light-subtle italic">
+                  <strong>Detalles médicos (Polimorfismo POO):</strong><br>
+                  {{ h.generarResumenDetallado() }}
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center text-muted small mt-2">
+                  <span><i class="bi bi-person-fill-gear me-1"></i>Atendido por: <strong>Dr(a). {{ h.veterinario }}</strong></span>
+                  <span class="font-monospace text-secondary" style="font-size: 0.75rem;">Reg. ID: {{ h.id }}</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <ng-template #sinHistorial>
+            <div class="text-center py-5">
+              <i class="bi bi-folder-x text-muted fs-1 mb-3 d-block"></i>
+              <h5 class="text-secondary fw-semibold">Historial Clínico Limpio</h5>
+              <p class="text-muted mb-0">Esta mascota no posee tratamientos, vacunas o cirugías registradas.</p>
+              <p class="text-muted">¡Utiliza el formulario de la derecha para añadir el primer registro médico!</p>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA REGISTRAR NUEVO ACCIDENTE/ATENCIÓN - (5/12) -->
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-header bg-primary text-white p-3">
+          <h5 class="card-title mb-0 fw-bold">
+            <i class="bi bi-file-earmark-plus me-2"></i>Agregar Registro Clínico
+          </h5>
+        </div>
+        <div class="card-body p-4 bg-white">
+          <div *ngIf="registroExitoso" class="alert alert-success alert-dismissible fade show d-flex align-items-center mb-4 rounded-3" role="alert">
+            <i class="bi bi-check-circle-fill me-3 fs-4"></i>
+            <div>
+              <strong>¡Registro Clínico Guardado!</strong> El evento ha sido añadido exitosamente a la línea de tiempo.
+            </div>
+            <button type="button" class="btn-close" (click)="registroExitoso = false"></button>
+          </div>
+
+          <form [formGroup]="historialForm" (ngSubmit)="onSubmit()">
+            
+            <!-- Selector de Tipo de Atención -->
+            <div class="mb-3">
+              <label for="tipoAtencion" class="form-label small fw-bold text-secondary">Tipo de Registro Clínico</label>
+              <select id="tipoAtencion" formControlName="tipo" class="form-select rounded-3 border-primary-subtle text-primary fw-bold">
+                <option value="vacuna">Vacuna / Inmunización</option>
+                <option value="tratamiento">Tratamiento / Receta Médica</option>
+                <option value="cirugia">Cirugía / Intervención</option>
+              </select>
+            </div>
+
+            <div class="row g-2 mb-3">
+              <!-- Fecha -->
+              <div class="col-md-6">
+                <label for="fechaRegistro" class="form-label small fw-semibold">Fecha de Atención</label>
+                <input type="date" id="fechaRegistro" formControlName="fecha" class="form-control rounded-3" [class.is-invalid]="esInvalido('fecha')">
+                <div *ngIf="esInvalido('fecha')" class="invalid-feedback">Requerido.</div>
+              </div>
+              <!-- Veterinario -->
+              <div class="col-md-6">
+                <label for="veterinarioName" class="form-label small fw-semibold">Médico Veterinario</label>
+                <input type="text" id="veterinarioName" formControlName="veterinario" class="form-control rounded-3" placeholder="Ej. Ana Torres" [class.is-invalid]="esInvalido('veterinario')">
+                <div *ngIf="esInvalido('veterinario')" class="invalid-feedback">Nombre requerido (mín. 3 letras).</div>
+              </div>
+            </div>
+
+            <!-- Diagnóstico Común -->
+            <div class="mb-4">
+              <label for="diagnosticoComun" class="form-label small fw-semibold">Diagnóstico / Observación Inicial</label>
+              <textarea id="diagnosticoComun" formControlName="diagnostico" rows="2" class="form-control rounded-3" placeholder="Ej. Paciente sano en control, presenta inflamación..." [class.is-invalid]="esInvalido('diagnostico')"></textarea>
+              <div *ngIf="esInvalido('diagnostico')" class="invalid-feedback">Diagnóstico requerido (mín. 5 letras).</div>
+            </div>
+
+            <hr class="text-muted my-3">
+
+            <!-- SUBFORMS CONDICIONALES -->
+            
+            <!-- 1. VACUNAS -->
+            <div *ngIf="tipoRegistro === 'vacuna'" class="bg-info-subtle bg-opacity-10 p-3 rounded-4 border border-info-subtle mb-4">
+              <div class="fw-bold text-info small mb-3">
+                <i class="bi bi-capsule me-1"></i>Detalles de Vacunación
+              </div>
+              <div class="mb-3">
+                <label for="nombreVacuna" class="form-label small fw-semibold">Nombre de la Vacuna</label>
+                <input type="text" id="nombreVacuna" formControlName="nombreVacuna" class="form-control rounded-3" placeholder="Ej. Quíntuple Canina, Rabia" [class.is-invalid]="esInvalido('nombreVacuna')">
+                <div *ngIf="esInvalido('nombreVacuna')" class="invalid-feedback">Requerido.</div>
+              </div>
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label for="loteVacuna" class="form-label small fw-semibold">Código de Lote</label>
+                  <input type="text" id="loteVacuna" formControlName="lote" class="form-control rounded-3" placeholder="Ej. L-12345" [class.is-invalid]="esInvalido('lote')">
+                  <div *ngIf="esInvalido('lote')" class="invalid-feedback">Requerido.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="proximaDosis" class="form-label small fw-semibold">Próxima Dosis</label>
+                  <input type="date" id="proximaDosis" formControlName="proximaDosis" class="form-control rounded-3" [class.is-invalid]="esInvalido('proximaDosis')">
+                  <div *ngIf="esInvalido('proximaDosis')" class="invalid-feedback">Requerido.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. TRATAMIENTO -->
+            <div *ngIf="tipoRegistro === 'tratamiento'" class="bg-success-subtle bg-opacity-10 p-3 rounded-4 border border-success-subtle mb-4">
+              <div class="fw-bold text-success small mb-3">
+                <i class="bi bi-heart-pulse me-1"></i>Detalles de Tratamiento
+              </div>
+              <div class="mb-3">
+                <label for="medicacionName" class="form-label small fw-semibold">Medicación Recetada</label>
+                <input type="text" id="medicacionName" formControlName="medicacion" class="form-control rounded-3" placeholder="Ej. Apoquel tabletas, Oticum gotas" [class.is-invalid]="esInvalido('medicacion')">
+                <div *ngIf="esInvalido('medicacion')" class="invalid-feedback">Requerido.</div>
+              </div>
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label for="dosisTratamiento" class="form-label small fw-semibold">Dosis / Indicación</label>
+                  <input type="text" id="dosisTratamiento" formControlName="dosis" class="form-control rounded-3" placeholder="Ej. 1 tableta c/24h" [class.is-invalid]="esInvalido('dosis')">
+                  <div *ngIf="esInvalido('dosis')" class="invalid-feedback">Requerido.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="duracionTratamiento" class="form-label small fw-semibold">Duración (Días)</label>
+                  <input type="number" id="duracionTratamiento" formControlName="duracionDias" class="form-control rounded-3" placeholder="Ej. 7" [class.is-invalid]="esInvalido('duracionDias')">
+                  <div *ngIf="esInvalido('duracionDias')" class="invalid-feedback">Requerido (mín. 1 día).</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. CIRUGÍA -->
+            <div *ngIf="tipoRegistro === 'cirugia'" class="bg-danger-subtle bg-opacity-10 p-3 rounded-4 border border-danger-subtle mb-4">
+              <div class="fw-bold text-danger small mb-3">
+                <i class="bi bi-activity me-1"></i>Detalles Quirúrgicos
+              </div>
+              <div class="mb-3">
+                <label for="procedimientoCirugia" class="form-label small fw-semibold">Procedimiento Quirúrgico</label>
+                <input type="text" id="procedimientoCirugia" formControlName="procedimiento" class="form-control rounded-3" placeholder="Ej. Esterilización Ovariohisterectomía" [class.is-invalid]="esInvalido('procedimiento')">
+                <div *ngIf="esInvalido('procedimiento')" class="invalid-feedback">Requerido.</div>
+              </div>
+              <div class="mb-3">
+                <label for="anestesiaTipo" class="form-label small fw-semibold">Tipo de Anestesia</label>
+                <input type="text" id="anestesiaTipo" formControlName="tipoAnestesia" class="form-control rounded-3" placeholder="Ej. Inhalatoria, Fija combinada" [class.is-invalid]="esInvalido('tipoAnestesia')">
+                <div *ngIf="esInvalido('tipoAnestesia')" class="invalid-feedback">Requerido.</div>
+              </div>
+              <div class="mb-0">
+                <label for="cuidadosPost" class="form-label small fw-semibold">Cuidados Postoperatorios</label>
+                <textarea id="cuidadosPost" formControlName="cuidadosPostoperatorios" rows="2" class="form-control rounded-3" placeholder="Ej. Limpieza diaria, uso de faja, evitar saltos..." [class.is-invalid]="esInvalido('cuidadosPostoperatorios')"></textarea>
+                <div *ngIf="esInvalido('cuidadosPostoperatorios')" class="invalid-feedback">Requerido.</div>
+              </div>
+            </div>
+
+            <!-- Botón Guardar -->
+            <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-bold shadow-sm">
+              <i class="bi bi-plus-circle me-2"></i>Guardar en Historial
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #selectMascotaMsg>
+  <div class="row">
+    <div class="col-12 text-center py-5 bg-white rounded-4 shadow-sm">
+      <i class="bi bi-folder-symlink text-muted fs-1 mb-3 d-block"></i>
+      <h4 class="text-secondary fw-semibold">Selecciona un Paciente</h4>
+      <p class="text-muted">Por favor, selecciona una mascota en el menú superior para poder ver su historial médico y registrar nuevas atenciones.</p>
+    </div>
+  </div>
+</ng-template>

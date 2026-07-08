@@ -3,12 +3,13 @@
     <img src="assets/brand/logovet.png" alt="VetIDAT Logo" class="navbar__logo" routerLink="/" height="1300"
          width="1300">
     <nav class="navbar__links">
-      <a routerLink="/" class="navbar__link">Nosotros</a>
-      <a routerLink="/" class="navbar__link">Servicios</a>
-      <a routerLink="/" class="navbar__link">Clínica Veterinaria</a>
-      <a routerLink="/" class="navbar__link">Blog</a>
+      <a routerLink="/" class="navbar__link" routerLinkActive="navbar__link--active" [routerLinkActiveOptions]="{exact: true}">Inicio</a>
+      <a routerLink="/mascotas" class="navbar__link" routerLinkActive="navbar__link--active">Mascotas</a>
+      <a routerLink="/citas" class="navbar__link" routerLinkActive="navbar__link--active">Citas</a>
+      <a routerLink="/historial" class="navbar__link" routerLinkActive="navbar__link--active">Historial Clínico</a>
     </nav>
   </div>
 </header>
+
 
 <router-outlet></router-outlet>

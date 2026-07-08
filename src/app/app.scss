@@ -46,5 +46,11 @@ $color-white: #ffffff;
     &:hover {
       color: $color-accent;
     }
+
+    &--active {
+      color: $color-accent;
+      border-bottom: 2px solid $color-accent;
+      padding-bottom: 2px;
+    }
   }
 }

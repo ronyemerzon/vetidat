@@ -1,0 +1,84 @@
+$color-primary: #1d438a;
+$color-accent: #ff9100;
+
+.info-paciente-card {
+  border: 1px solid rgba(0, 0, 0, 0.04) !important;
+}
+
+.avatar-pet, .avatar-owner {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.avatar-pet {
+  background-color: $color-primary;
+}
+
+.avatar-owner {
+  background-color: $color-accent;
+}
+
+// Estructura de Línea de Tiempo (Timeline)
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+  margin-top: 1rem;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 1.15rem;
+    width: 2px;
+    background-color: rgba($color-primary, 0.15);
+  }
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.timeline-badge {
+  position: absolute;
+  left: -2.5rem;
+  top: 0.25rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  z-index: 10;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+
+  i {
+    font-size: 1.1rem;
+  }
+}
+
+.timeline-card {
+  background-color: #fcfcfc;
+  border: 1px solid rgba(0, 0, 0, 0.03) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(29, 67, 138, 0.05) !important;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+}
+
+// Focus control
+.form-control:focus, .form-select:focus, .form-control:focus-within {
+  border-color: rgba($color-primary, 0.5);
+  box-shadow: 0 0 0 0.25rem rgba($color-primary, 0.15);
+}

@@ -1,0 +1,259 @@
+<div class="container py-4">
+  <div class="row mb-4">
+    <div class="col-12 text-center text-lg-start">
+      <h1 class="display-5 text-primary fw-bold">
+        <i class="bi bi-patch-plus-fill me-2"></i>Mascotas y Dueños
+      </h1>
+      <p class="text-muted">Registra nuevos pacientes y gestiona la base de datos de la veterinaria.</p>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- COLUMNA FORMULARIO DE REGISTRO (5/12) -->
+    <div class="col-lg-5">
+      <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-header bg-primary text-white p-3">
+          <h5 class="card-title mb-0 fw-bold">
+            <i class="bi bi-file-earmark-medical me-2"></i>Registro de Paciente
+          </h5>
+        </div>
+        <div class="card-body p-4 bg-white">
+          <div *ngIf="registroExitoso" class="alert alert-success alert-dismissible fade show d-flex align-items-center mb-4 rounded-3" role="alert">
+            <i class="bi bi-check-circle-fill me-3 fs-4"></i>
+            <div>
+              <strong>¡Registro Exitoso!</strong> La mascota y su dueño han sido guardados en el sistema.
+            </div>
+            <button type="button" class="btn-close" (click)="registroExitoso = false"></button>
+          </div>
+
+          <form [formGroup]="registroForm" (ngSubmit)="onSubmit()">
+            
+            <!-- SECCIÓN DEL DUEÑO -->
+            <div class="mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="fw-bold text-secondary">
+                  <i class="bi bi-person-fill me-1"></i>Información del Dueño
+                </span>
+                <div class="btn-group btn-group-sm" role="group">
+                  <button type="button" class="btn btn-outline-primary" 
+                          [class.active]="modoNuevoDueno" 
+                          (click)="cambiarModoDueno(true)">Nuevo</button>
+                  <button type="button" class="btn btn-outline-primary" 
+                          [class.active]="!modoNuevoDueno" 
+                          [disabled]="duenos.length === 0"
+                          (click)="cambiarModoDueno(false)">Existente</button>
+                </div>
+              </div>
+
+              <!-- Dueño Existente -->
+              <div *ngIf="!modoNuevoDueno" class="mb-3">
+                <label for="duenoExistenteId" class="form-label small fw-bold">Seleccionar Dueño</label>
+                <select id="duenoExistenteId" formControlName="duenoExistenteId" class="form-select rounded-3">
+                  <option *ngFor="let d of duenos" [value]="d.id">
+                    {{ d.nombre }} (Tlf: {{ d.telefono }})
+                  </option>
+                </select>
+              </div>
+
+              <!-- Dueño Nuevo -->
+              <div *ngIf="modoNuevoDueno" class="bg-light p-3 rounded-4 border border-light-subtle">
+                <div class="mb-3">
+                  <label for="duenoNombre" class="form-label small fw-semibold">Nombre Completo</label>
+                  <input type="text" id="duenoNombre" formControlName="duenoNombre" class="form-control rounded-3" placeholder="Ej. Juan Pérez">
+                  <div *ngIf="esInvalido('duenoNombre')" class="text-danger small mt-1">
+                    <span *ngIf="registroForm.get('duenoNombre')?.errors?.['required']">El nombre es requerido.</span>
+                    <span *ngIf="registroForm.get('duenoNombre')?.errors?.['minlength']">Mínimo 3 caracteres.</span>
+                  </div>
+                </div>
+
+                <div class="row g-2 mb-3">
+                  <div class="col-md-6">
+                    <label for="duenoTelefono" class="form-label small fw-semibold">Celular</label>
+                    <input type="text" id="duenoTelefono" formControlName="duenoTelefono" class="form-control rounded-3" placeholder="Ej. 998877665">
+                    <div *ngIf="esInvalido('duenoTelefono')" class="text-danger small mt-1">
+                      <span *ngIf="registroForm.get('duenoTelefono')?.errors?.['required']">Celular requerido.</span>
+                      <span *ngIf="registroForm.get('duenoTelefono')?.errors?.['pattern']">Debe iniciar con 9 y tener 9 dígitos.</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="duenoEmail" class="form-label small fw-semibold">Correo Electrónico</label>
+                    <input type="email" id="duenoEmail" formControlName="duenoEmail" class="form-control rounded-3" placeholder="Ej. juan@correo.com">
+                    <div *ngIf="esInvalido('duenoEmail')" class="text-danger small mt-1">
+                      <span *ngIf="registroForm.get('duenoEmail')?.errors?.['required']">Correo requerido.</span>
+                      <span *ngIf="registroForm.get('duenoEmail')?.errors?.['email']">Formato de correo no válido.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-0">
+                  <label for="duenoDireccion" class="form-label small fw-semibold">Dirección Residencial</label>
+                  <input type="text" id="duenoDireccion" formControlName="duenoDireccion" class="form-control rounded-3" placeholder="Ej. Av. Larco 123, Miraflores">
+                  <div *ngIf="esInvalido('duenoDireccion')" class="text-danger small mt-1">
+                    <span *ngIf="registroForm.get('duenoDireccion')?.errors?.['required']">La dirección es requerida.</span>
+                    <span *ngIf="registroForm.get('duenoDireccion')?.errors?.['minlength']">Mínimo 5 caracteres.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr class="text-muted my-4">
+
+            <!-- SECCIÓN DE LA MASCOTA -->
+            <div class="mb-4">
+              <span class="fw-bold text-secondary d-block mb-3">
+                <i class="bi bi-heart-pulse-fill me-1"></i>Información de la Mascota
+              </span>
+
+              <div class="mb-3">
+                <label for="mascotaNombre" class="form-label small fw-semibold">Nombre de la Mascota</label>
+                <input type="text" id="mascotaNombre" formControlName="mascotaNombre" class="form-control rounded-3" placeholder="Ej. Toby">
+                <div *ngIf="esInvalido('mascotaNombre')" class="text-danger small mt-1">
+                  <span *ngIf="registroForm.get('mascotaNombre')?.errors?.['required']">El nombre es requerido.</span>
+                  <span *ngIf="registroForm.get('mascotaNombre')?.errors?.['minlength']">Mínimo 2 caracteres.</span>
+                </div>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-6">
+                  <label for="mascotaEspecie" class="form-label small fw-semibold">Especie</label>
+                  <select id="mascotaEspecie" formControlName="mascotaEspecie" class="form-select rounded-3">
+                    <option value="" disabled selected>Selecciona especie</option>
+                    <option value="Perro">Perro</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Ave">Ave</option>
+                    <option value="Conejo">Conejo</option>
+                    <option value="Otros">Otros</option>
+                  </select>
+                  <div *ngIf="esInvalido('mascotaEspecie')" class="text-danger small mt-1">
+                    <span>Especie requerida.</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="mascotaRaza" class="form-label small fw-semibold">Raza</label>
+                  <input type="text" id="mascotaRaza" formControlName="mascotaRaza" class="form-control rounded-3" placeholder="Ej. Golden, Mestizo">
+                  <div *ngIf="esInvalido('mascotaRaza')" class="text-danger small mt-1">
+                    <span>Raza requerida.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label for="mascotaEdad" class="form-label small fw-semibold">Edad (años)</label>
+                  <input type="number" id="mascotaEdad" formControlName="mascotaEdad" class="form-control rounded-3" placeholder="Ej. 3">
+                  <div *ngIf="esInvalido('mascotaEdad')" class="text-danger small mt-1">
+                    <span *ngIf="registroForm.get('mascotaEdad')?.errors?.['required']">Edad requerida.</span>
+                    <span *ngIf="registroForm.get('mascotaEdad')?.errors?.['min']">Mínimo 0 años.</span>
+                    <span *ngIf="registroForm.get('mascotaEdad')?.errors?.['max']">Máximo 30 años.</span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="mascotaPeso" class="form-label small fw-semibold">Peso (kg)</label>
+                  <input type="number" step="0.1" id="mascotaPeso" formControlName="mascotaPeso" class="form-control rounded-3" placeholder="Ej. 12.5">
+                  <div *ngIf="esInvalido('mascotaPeso')" class="text-danger small mt-1">
+                    <span *ngIf="registroForm.get('mascotaPeso')?.errors?.['required']">Peso requerido.</span>
+                    <span *ngIf="registroForm.get('mascotaPeso')?.errors?.['min']">Mínimo 0.1 kg.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- BOTÓN DE ENVÍO -->
+            <button type="submit" class="btn btn-primary w-100 py-2.5 rounded-3 fw-bold shadow-sm">
+              <i class="bi bi-save me-2"></i>Guardar Registro
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- COLUMNA LISTADO DE MASCOTAS (7/12) -->
+    <div class="col-lg-7">
+      <!-- Filtro de Búsqueda -->
+      <div class="card border-0 shadow-sm rounded-4 mb-4">
+        <div class="card-body p-3 bg-white d-flex align-items-center">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0 text-muted rounded-start-3">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="text" [(ngModel)]="busqueda" (input)="filtrarMascotas()" 
+                   class="form-control border-start-0 ps-0 rounded-end-3" 
+                   placeholder="Buscar por nombre, especie, raza o dueño...">
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjetas de Mascotas -->
+      <div class="row g-3">
+        <div class="col-12" *ngFor="let m of mascotasFiltradas">
+          <div class="card border-0 shadow-sm rounded-4 overflow-hidden mascota-card h-100 bg-white">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-start justify-content-between">
+                <div class="d-flex align-items-center">
+                  <!-- Icono grande según la especie -->
+                  <div class="especie-avatar me-3 text-white rounded-circle d-flex align-items-center justify-content-center"
+                       [ngClass]="{
+                         'bg-info': m.especie === 'Perro',
+                         'bg-success': m.especie === 'Gato',
+                         'bg-warning': m.especie === 'Ave',
+                         'bg-secondary': m.especie !== 'Perro' && m.especie !== 'Gato' && m.especie !== 'Ave'
+                       }">
+                    <i class="bi fs-3" 
+                       [ngClass]="{
+                         'bi-dog': m.especie === 'Perro',
+                         'bi-cat': m.especie === 'Gato',
+                         'bi-twitter': m.especie === 'Ave',
+                         'bi-heart-fill': m.especie !== 'Perro' && m.especie !== 'Gato' && m.especie !== 'Ave'
+                       }"></i>
+                  </div>
+                  <div>
+                    <h4 class="mb-1 text-primary fw-bold">{{ m.nombre }}</h4>
+                    <div class="d-flex gap-2 mb-2 flex-wrap">
+                      <span class="badge bg-light text-dark border">{{ m.especie }}</span>
+                      <span class="badge bg-light text-dark border">{{ m.raza }}</span>
+                      <span class="badge bg-light text-dark border">{{ m.edad }} años</span>
+                      <span class="badge bg-light text-dark border">{{ m.peso }} kg</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-2.5 py-1.5 rounded-pill">
+                    Paciente ID: {{ m.id }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Dueño Info -->
+              <div class="bg-light p-3 rounded-3 mt-3 border border-light-subtle">
+                <div class="d-flex align-items-center justify-content-between mb-1">
+                  <span class="text-secondary small fw-bold">Dueño / Responsable</span>
+                </div>
+                <div *ngIf="obtenerDuenoDeMascota(m.duenoId) as dueno; else sinDueno">
+                  <h6 class="mb-1 fw-bold text-dark">{{ dueno.nombre }}</h6>
+                  <p class="mb-0 text-muted small">
+                    <i class="bi bi-telephone-fill me-1"></i>{{ dueno.telefono }} &nbsp;|&nbsp; 
+                    <i class="bi bi-envelope-fill me-1"></i>{{ dueno.email }}
+                  </p>
+                  <p class="mb-0 text-muted small mt-1">
+                    <i class="bi bi-geo-alt-fill me-1"></i>{{ dueno.direccion }}
+                  </p>
+                </div>
+                <ng-template #sinDueno>
+                  <span class="text-danger small">No se encontró dueño asociado.</span>
+                </ng-template>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Sin resultados -->
+        <div class="col-12 text-center py-5 bg-white rounded-4 shadow-sm" *ngIf="mascotasFiltradas.length === 0">
+          <i class="bi bi-emoji-frown text-muted fs-1 mb-3 d-block"></i>
+          <h5 class="text-secondary fw-semibold">No se encontraron mascotas</h5>
+          <p class="text-muted">Prueba buscando con otros términos o registra una nueva mascota.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
