@@ -1,5 +1,14 @@
 # 🐾 VetIDAT - Sistema Web de Gestión Veterinaria
 
+### 👥 Integrantes del Grupo (Interfaces III - IDAT)
+*   **Rony Emerzon Pascual Cardenas**
+*   **Alison Laulate Villa**
+*   **Cristhian moreno Silva**
+
+🔗 **Repositorio GitHub:** [https://github.com/ronyemerzon/vetidat](https://github.com/ronyemerzon/vetidat)
+
+---
+
 Este proyecto es una aplicación web funcional desarrollada en **Angular** y **TypeScript**, diseñada para digitalizar y optimizar los procesos de atención de una clínica veterinaria. Cumple de manera rigurosa con los requisitos de la evaluación académica para el curso **Interfaces III** de **IDAT**, alcanzando el nivel **Sobresaliente** en todos los criterios de la rúbrica.
 
 ---
